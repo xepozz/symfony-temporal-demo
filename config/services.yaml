@@ -11,6 +11,15 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+    _instanceof:
+        App\Contract\WorkflowInterface:
+            tags:
+                - 'temporal.workflow'
+
+        App\Contract\ActivityInterface:
+            tags:
+                - 'temporal.activity'
+
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -21,5 +30,24 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Controller\:
+        resource: '../src/Controller/'
+        public: true
+#        autoconfigure: true
+#        autowire: true
+
+    Temporal\Client\WorkflowClientInterface:
+        class: Temporal\Client\WorkflowClient
+        arguments:
+            - '@Temporal\Client\GRPC\ServiceClient'
+
+    Temporal\Client\GRPC\ServiceClient:
+        class: Temporal\Client\GRPC\ServiceClient
+        factory: [Temporal\Client\GRPC\ServiceClient, create]
+        arguments:
+            - localhost:7233
+
+    App\TemporalWorker:
+        arguments:
+            $workflows: !tagged_iterator 'temporal.workflow'
+            $activities: !tagged_iterator 'temporal.activity'
