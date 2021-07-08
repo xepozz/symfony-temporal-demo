@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace App\App\Activity;
 
 #[\Temporal\Activity\ActivityInterface(prefix: "app.")]
-class HelloActivity implements \App\Contract\ActivityInterface
+class HelloActivity
 {
     public function hello(string $name): string
     {

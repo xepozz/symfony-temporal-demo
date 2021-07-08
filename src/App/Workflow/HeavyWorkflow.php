@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace App\App\Workflow;
 
 use App\App\Activity\HelloActivity;
-use App\Contract\WorkflowInterface;
 use Temporal\Activity\ActivityOptions;
 use Temporal\Promise;
 use Temporal\Workflow;
 
-class HeavyWorkflow implements WorkflowInterface
+#[\Temporal\Workflow\WorkflowInterface]
+class HeavyWorkflow
 {
     private array $done = [];
     private string $status = 'start';
@@ -24,7 +24,7 @@ class HeavyWorkflow implements WorkflowInterface
     }
 
     #[\Temporal\Workflow\WorkflowMethod("heavy_workflow")]
-    public function run(string $name, int $count)
+    public function run(string $name, int $count): \Generator
     {
         $activity = Workflow::newActivityStub(
             HelloActivity::class,
