@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace App\App\Workflow;
+namespace App\Temporal\Workflow;
 
-use App\App\Activity\HelloActivity;
+use App\Temporal\Activity\CommonActivity;
 use Temporal\Activity\ActivityOptions;
 use Temporal\Promise;
 use Temporal\Workflow;
 
 #[\Temporal\Workflow\WorkflowInterface]
-class HeavyWorkflow
+final class LongWorkflow
 {
     private array $done = [];
     private string $status = 'start';
 
     #[Workflow\QueryMethod]
-    public function getStatus()
+    public function getStatus(): array
     {
         return [
             'status' => $this->status,
@@ -23,11 +23,11 @@ class HeavyWorkflow
         ];
     }
 
-    #[\Temporal\Workflow\WorkflowMethod("heavy_workflow")]
+    #[\Temporal\Workflow\WorkflowMethod("long_workflow")]
     public function run(string $name, int $count): \Generator
     {
         $activity = Workflow::newActivityStub(
-            HelloActivity::class,
+            CommonActivity::class,
             ActivityOptions::new()
                 ->withStartToCloseTimeout(5)
         );
@@ -45,6 +45,7 @@ class HeavyWorkflow
         $this->status = 'processing';
 
         $result = yield Promise::all($promises);
+
         $this->status = 'done';
 
         return $result;

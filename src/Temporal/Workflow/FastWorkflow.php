@@ -1,28 +1,28 @@
 <?php
 declare(strict_types=1);
 
-namespace App\App\Workflow;
+namespace App\Temporal\Workflow;
 
-use App\App\Activity\HelloActivity;
+use App\Temporal\Activity\CommonActivity;
 use Temporal\Activity\ActivityOptions;
 use Temporal\Promise;
 use Temporal\Workflow;
 
 #[\Temporal\Workflow\WorkflowInterface]
-class MainWorkflow
+final class FastWorkflow
 {
-    #[\Temporal\Workflow\WorkflowMethod("main_workflow")]
+    #[\Temporal\Workflow\WorkflowMethod("fast_workflow")]
     public function run(string $name, int $count): \Generator
     {
         $activity = Workflow::newActivityStub(
-            HelloActivity::class,
+            CommonActivity::class,
             ActivityOptions::new()
                 ->withStartToCloseTimeout(5)
         );
         $promises = [];
 
         foreach (range(1, $count) as $item) {
-            $promises[] = $activity->slow($name);
+            $promises[] = $activity->fast($name);
         }
 
         return yield Promise::all($promises);
