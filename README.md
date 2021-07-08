@@ -49,13 +49,13 @@ You are welcome to add more examples, fix bugs or orthographic errors.
 
 ## Useful links
 
-#### Used components
+#### Used libraries
 [BaldinofRoadRunnerBundle](https://github.com/Baldinof/roadrunner-bundle)
+[Temporal PHP SDK](https://github.com/temporalio/sdk-php)
+[RoadRunner](https://github.com/spiral/roadrunner)
 
 #### Temporal:
 [Temporal (temporal.io)](https://temporal.io/)
-
-[Temporal PHP SDK (Github)](https://github.com/temporalio/sdk-php)
 
 #### Workshops
 1st part [Оркестрируй это! Описываем сложные бизнес процессы на PHP - Антон Титов](https://www.youtube.com/watch?v=0NCMEaFMj_M)
