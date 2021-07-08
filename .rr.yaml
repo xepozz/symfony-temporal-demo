@@ -1,3 +1,6 @@
+rpc:
+  listen: tcp://127.0.0.1:6001
+
 server:
   command: "php bin/console baldinof:roadrunner:worker"
   # If you are using symfony 5.3+ and the new Runtime component:
@@ -9,14 +12,21 @@ server:
 http:
   address: 0.0.0.0:8080
   middleware: [ "static", "gzip" ]
+  pool:
+    num_workers: 2
   uploads:
     forbid: [ ".php", ".exe", ".bat" ]
   static:
     dir: "public"
     forbid: [ ".php", ".htaccess" ]
 
+temporal:
+  address: localhost:7233
+  activities:
+    num_workers: 5
+
 logs:
-  mode: production
+  mode: development
   channels:
     http:
       level: debug # Log all http requests, set to info to disable
@@ -24,13 +34,13 @@ logs:
       level: info # Everything written to worker stderr is logged
       mode: raw
     metrics:
-      level: error
+      level: debug
 
-# Uncomment to use metrics integration
-# rpc:
-#   listen: tcp://127.0.0.1:6001
-
-# Uncomment to use metrics integration
-# metrics:
-#   # prometheus client address (path /metrics added automatically)
-#   address: "0.0.0.0:9180"
+reload:
+  enabled: true
+  interval: 1s
+  patterns: [".php", ".yaml"]
+  services:
+    http:
+      dirs: ["."]
+      recursive: true
