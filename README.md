@@ -9,19 +9,27 @@ Temporary used fork https://github.com/xepozz/roadrunner-bundle/tree/add-tempora
 ## Installation
 Install PHP dependencies:
 
-`composer i --prefer-dist`
+```shell
+composer i --prefer-dist
+```
 
 Get RoadRunner binary:
 
-`./vendor/bin/rr get-binary`
+```shell
+./vendor/bin/rr get-binary
+```
 
 Run docker containers:
 
-`docker-compose up -d`
+```shell
+docker-compose up -d
+```
 
 Run RoadRunner with debug mode (`-d` flag):
 
-`./rr serve -d`
+```shell
+./rr serve -d
+```
 
 ## Usage
 
