@@ -1,3 +1,6 @@
+# Rich config example you may look at here
+# https://github.com/roadrunner-server/roadrunner/blob/master/.rr.yaml
+
 rpc:
   listen: tcp://127.0.0.1:6001
 

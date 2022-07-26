@@ -13,7 +13,7 @@ Install PHP dependencies:
 composer i --prefer-dist
 ```
 
-Get RoadRunner binary:
+Get `RoadRunner` binary:
 
 ```shell
 ./vendor/bin/rr get-binary
@@ -25,10 +25,10 @@ Run docker containers:
 docker-compose up -d
 ```
 
-Run RoadRunner with debug mode (`-d` flag):
+Run `RoadRunner`:
 
 ```shell
-./rr serve -d
+./rr serve
 ```
 
 ## Usage
